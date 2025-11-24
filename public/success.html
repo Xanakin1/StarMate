@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Thank You | StarPaws</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: #0A0A21; /* Closer to your image's background color */
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    body::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(circle at 10% 20%, white 1px, transparent 1px),
+        radial-gradient(circle at 80% 80%, white 1px, transparent 1px),
+        radial-gradient(circle at 40% 40%, white 1px, transparent 1px),
+        radial-gradient(circle at 60% 10%, white 1px, transparent 1px),
+        radial-gradient(circle at 90% 50%, white 1px, transparent 1px),
+        radial-gradient(circle at 20% 90%, white 1px, transparent 1px),
+        radial-gradient(circle at 70% 30%, white 1px, transparent 1px),
+        radial-gradient(circle at 30% 70%, white 1px, transparent 1px);
+      background-size: 200px 200px;
+      animation: twinkle 3s linear infinite;
+      z-index: -1;
+    }
+
+    /* Optional: Add a subtle twinkle animation */
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.8; }
+      50% { opacity: 1; }
+    }
+
+    .image-container {
+      position: relative;
+      width: 90%;
+      max-width: 900px;
+      border-radius: 20px;
+      overflow: hidden;
+      /* Subtle gradient border effect */
+      background: linear-gradient(135deg, 
+        rgba(255, 255, 255, 0.1) 0%, 
+        rgba(255, 255, 255, 0.05) 25%, 
+        transparent 50%, 
+        rgba(255, 255, 255, 0.05) 75%, 
+        rgba(255, 255, 255, 0.1) 100%);
+      padding: 2px;
+    }
+
+    .image-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, 
+        rgba(255, 255, 255, 0.08) 0%, 
+        transparent 30%, 
+        transparent 70%, 
+        rgba(255, 255, 255, 0.08) 100%);
+      border-radius: 20px;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .illustration {
+      width: 100%;
+      height: auto;
+      border-radius: 18px;
+      display: block;
+      position: relative;
+      z-index: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="image-container">
+    <img src="/success_image.png" alt="Thank you for your purchase" class="illustration" />
+  </div>
+  
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const sessionId = urlParams.get('session_id');
+  
+    if (sessionId) {
+      fetch('/api/dev-generate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ sessionId })
+      })
+      .then(res => res.json())
+      .then(data => console.log('✅ Star map sent:', data))
+      .catch(err => console.error('❌ Error sending star map:', err));
+    }
+  </script>
+</body>
+</html>

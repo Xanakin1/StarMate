@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StarMate - Create Your Star Map</title>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+            background: radial-gradient(1200px 600px at 10% 10%, rgba(155,110,219,0.12), transparent),
+                        linear-gradient(135deg, #0b0520 0%, #241134 100%);
+            color: white;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
+        }
+
+        .stars {
+            position: fixed;
+            top: -50%;
+            left: 0;
+            width: 100%;
+            height: 300%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: linear-gradient(180deg, #fff, #ffd6e8);
+            border-radius: 50%;
+            animation: twinkle 2s infinite alternate;
+        }
+
+        @keyframes twinkle {
+            0% { opacity: 0.25; }
+            50% { opacity: 1; }
+            100% { opacity: 0.4; }
+        }
+
+        .nebula {
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(ellipse at 30% 20%, rgba(155,110,219,0.15), transparent 50%),
+                        radial-gradient(ellipse at 70% 80%, rgba(216,155,214,0.1), transparent 50%);
+            opacity: 0.4;
+            filter: blur(80px);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        header {
+            padding: 28px 0;
+            text-align: center;
+            position: relative;
+            z-index: 3;
+        }
+
+        .logo {
+            font-family: "Playfair Display", serif;
+            font-size: 2em;
+            letter-spacing: 0.6px;
+            font-weight: 700;
+            background: linear-gradient(90deg, #d89bd6, #9b6edb);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+
+        .tagline {
+            color: rgba(255,255,255,0.8);
+            font-size: 0.95rem;
+        }
+
+        .form-container {
+            background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.04));
+            border-radius: 24px;
+            padding: 40px;
+            margin: 40px 0;
+            box-shadow: 0 20px 60px rgba(9,6,30,0.6);
+            border: 1px solid rgba(255,255,255,0.08);
+            backdrop-filter: blur(10px);
+        }
+
+        h1 {
+            font-family: "Playfair Display", serif;
+            font-size: 2.2em;
+            text-align: center;
+            margin-bottom: 12px;
+            background: linear-gradient(90deg, #d89bd6, #9b6edb);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: rgba(255,255,255,0.8);
+            margin-bottom: 30px;
+            font-size: 1.05rem;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #d89bd6;
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="date"],
+        input[type="time"],
+        textarea {
+            width: 100%;
+            padding: 14px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            color: white;
+            font-size: 1rem;
+            font-family: "Inter", sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="date"]:focus,
+        input[type="time"]:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #9b6edb;
+            background: rgba(255,255,255,0.08);
+            box-shadow: 0 0 0 3px rgba(155,110,219,0.2);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .helper-text {
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.6);
+            margin-top: 6px;
+        }
+
+        .submit-button {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(90deg, #9b6edb, #d89bd6);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(155,110,219,0.3);
+            font-family: "Inter", sans-serif;
+            margin-top: 10px;
+        }
+
+        .submit-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(155,110,219,0.4);
+        }
+
+        .submit-button:active {
+            transform: translateY(-1px);
+        }
+
+        .price-display {
+            text-align: center;
+            padding: 20px;
+            background: rgba(155,110,219,0.15);
+            border-radius: 16px;
+            margin-bottom: 20px;
+        }
+
+        .price-display .old-price {
+            font-size: 1.2em;
+            color: #9b6edb;
+            position: relative;
+            display: inline-block;
+            margin-right: 10px;
+        }
+
+        .price-display .old-price::after {
+            content: '';
+            position: absolute;
+            left: -5%;
+            top: 57%;
+            width: 110%;
+            height: 3px;
+            background: #ff4757;
+            transform: translateY(-50%) rotate(7deg);
+        }
+
+        .price-display .new-price {
+            font-size: 2em;
+            color: #d89bd6;
+            font-weight: bold;
+            font-family: "Playfair Display", serif;
+        }
+
+        .trust-badges {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.7);
+        }
+
+        .trust-badge {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            color: rgba(255,255,255,0.6);
+            font-size: 0.9rem;
+        }
+
+        footer a {
+            color: #d89bd6;
+            text-decoration: none;
+        }
+
+        @media (max-width: 768px) {
+            .form-container {
+                padding: 28px 20px;
+            }
+            
+            h1 {
+                font-size: 1.8em;
+            }
+        }
+
+        /* Placeholder styling */
+        ::placeholder {
+            color: rgba(255,255,255,0.4);
+        }
+
+        input[type="date"]::-webkit-calendar-picker-indicator,
+        input[type="time"]::-webkit-calendar-picker-indicator {
+            filter: invert(1);
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="nebula" aria-hidden="true"></div>
+    <div class="stars" id="stars" aria-hidden="true"></div>
+    
+    <header>
+        <div class="container">
+            <div class="logo">♥ StarMate ✨</div>
+            <div class="tagline">Capture the night your hearts aligned</div>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="form-container">
+            <h1>Create Your Star Map</h1>
+            <p class="subtitle">Tell us about the magical moment when your love story began</p>
+
+            <div class="price-display">
+                <div>
+                    <span class="old-price">$9.99</span>
+                    <span class="new-price">$6.99</span>
+                </div>
+            </div>
+
+            <form id="starMapForm">
+                <div class="form-group">
+                    <label for="name1">First Person's Name *</label>
+                    <input type="text" id="name1" name="name1" required placeholder="Enter first name">
+                </div>
+
+                <div class="form-group">
+                    <label for="name2">Second Person's Name *</label>
+                    <input type="text" id="name2" name="name2" required placeholder="Enter second name">
+                </div>
+
+                <div class="form-group">
+                    <label for="date">Special Date *</label>
+                    <input type="date" id="date" name="date" required>
+                    <p class="helper-text">The date when your hearts aligned (first date, engagement, wedding, etc.)</p>
+                </div>
+
+                <div class="form-group">
+                    <label for="location">Location *</label>
+                    <input type="text" id="location" name="location" required placeholder="City, State or City, Country">
+                    <p class="helper-text">Where did this moment happen?</p>
+                </div>
+
+                <div class="form-group">
+                    <label for="message">Custom Message (Optional)</label>
+                    <textarea id="message" name="message" placeholder="Add a personal message to appear on your star map..."></textarea>
+                    <p class="helper-text">Example: "The night we said forever" or "Where our story began"</p>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email Address *</label>
+                    <input type="email" id="email" name="email" required placeholder="your@email.com">
+                    <p class="helper-text">We'll send your star map here instantly</p>
+                </div>
+
+                <button type="submit" class="submit-button">
+                    Create Our Star Map — $6.99 ⭐
+                </button>
+
+                <div class="trust-badges">
+                    <div class="trust-badge">
+                        <span>🔒</span>
+                        <span>Secure Checkout</span>
+                    </div>
+                    <div class="trust-badge">
+                        <span>⚡</span>
+                        <span>Instant Delivery</span>
+                    </div>
+                    <div class="trust-badge">
+                        <span>💝</span>
+                        <span>100% Satisfaction</span>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 StarMate. Crafted with love — and a little astronomy.</p>
+            <p style="margin-top: 8px;">
+                <a href="mailto:hello@starmate.co">hello@starmate.co</a> | 
+                <a href="privacy.html">Privacy</a> | 
+                <a href="terms.html">Terms</a>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Create animated stars
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            const numStars = 300;
+            
+            for (let i = 0; i < numStars; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animationDelay = Math.random() * 2 + 's';
+                starsContainer.appendChild(star);
+            }
+        }
+
+        // Parallax effect for stars
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const nebula = document.querySelector('.nebula');
+            const stars = document.querySelectorAll('.star');
+            
+            nebula.style.transform = `translateY(${scrolled * 0.5}px)`;
+            
+            stars.forEach((star, index) => {
+                const speed = 0.1 + (index % 3) * 0.05;
+                star.style.transform = `translateY(${scrolled * speed}px)`;
+            });
+        });
+
+        // Form submission
+        document.getElementById('starMapForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Here you would normally send the form data to your payment processor
+            // For now, we'll just log it
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData);
+            
+            console.log('Form submitted with data:', data);
+            alert('Form submitted! In production, this would redirect to payment processing.');
+            
+            // Redirect to payment processor (Stripe, etc.)
+            // window.location.href = '/checkout?data=' + encodeURIComponent(JSON.stringify(data));
+        });
+
+        // Initialize
+        createStars();
+    </script>
+</body>
+</html>

@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StarMate - The Night Our Hearts Aligned</title>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+            background: radial-gradient(1200px 600px at 10% 10%, rgba(155,110,219,0.12), transparent),
+                        linear-gradient(135deg, #0b0520 0%, #241134 100%);
+            color: white;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .stars {
+            position: fixed;
+            top: -50%;
+            left: 0;
+            width: 100%;
+            height: 300%;
+            pointer-events: none;
+            z-index: 1;
+            will-change: transform;
+        }
+
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: linear-gradient(180deg, #fff, #ffd6e8);
+            border-radius: 50%;
+            animation: twinkle 2s infinite alternate;
+            will-change: transform;
+        }
+
+        @keyframes twinkle {
+            0% { opacity: 0.25; }
+            50% { opacity: 1; }
+            100% { opacity: 0.4; }
+        }
+
+        .nebula {
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(ellipse at 30% 20%, rgba(155,110,219,0.15), transparent 50%),
+                        radial-gradient(ellipse at 70% 80%, rgba(216,155,214,0.1), transparent 50%);
+            opacity: 0.4;
+            filter: blur(80px);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        header {
+            padding: 28px 0;
+            text-align: center;
+            position: relative;
+            z-index: 3;
+        }
+
+        .logo {
+            font-family: "Playfair Display", serif;
+            font-size: 2.5em;
+            letter-spacing: 0.6px;
+            font-weight: 700;
+            background: linear-gradient(90deg, #d89bd6, #9b6edb);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+
+        .tagline {
+            color: rgba(255,255,255,0.9);
+            font-size: 1.2em;
+            opacity: 0.9;
+            margin-bottom: 30px;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 80px 0;
+            position: relative;
+        }
+
+        .hero h1 {
+            font-family: "Playfair Display", serif;
+            font-size: 3.5em;
+            line-height: 1.3;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            background: linear-gradient(90deg, #d89bd6, #b88bc9, #9b6edb, #b88bc9, #d89bd6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            background-size: 200% auto;
+        }
+
+        @keyframes shimmer {
+            0% { background-position: 200% center; }
+            100% { background-position: -200% center; }
+        }
+
+        .hero h1 {
+            animation: shimmer 8s linear infinite;
+        }
+
+        .hero p {
+            font-size: 1.4em;
+            margin-bottom: 40px;
+            color: rgba(255,255,255,0.9);
+            max-width: 650px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.6;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 20px 40px;
+            background: linear-gradient(90deg, #9b6edb, #d89bd6);
+            color: white;
+            text-decoration: none;
+            font-size: 1.3em;
+            font-weight: bold;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(155,110,219,0.3);
+            position: relative;
+            overflow: hidden;
+            border: none;
+            cursor: pointer;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(155,110,219,0.4);
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
+        }
+
+        .trust-signals {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 40px 0;
+            flex-wrap: wrap;
+        }
+
+        .trust-signal {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255,255,255,0.1);
+            padding: 15px 25px;
+            border-radius: 25px;
+        }
+
+        .features {
+            padding: 100px 0;
+            margin: 80px 0;
+        }
+
+        .features h2 {
+            font-family: "Playfair Display", serif;
+            font-size: 2.5em;
+            text-align: center;
+            margin-bottom: 20px;
+            color: #e6b77f;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-top: 60px;
+        }
+
+        .feature {
+            text-align: center;
+            padding: 40px 20px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .feature:hover {
+            transform: translateY(-10px);
+        }
+
+        .feature-icon {
+            font-size: 3em;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .feature h3 {
+            font-family: "Playfair Display", serif;
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            color: #9b6edb;
+        }
+
+        .feature p {
+            color: rgba(255,255,255,0.86);
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        .social-proof {
+            text-align: center;
+            padding: 80px 0;
+        }
+
+        .social-proof h2 {
+            font-family: "Playfair Display", serif;
+            font-size: 2.5em;
+            margin-bottom: 40px;
+            color: #e6b77f;
+        }
+
+        .testimonial {
+            background: rgba(255,255,255,0.1);
+            padding: 40px;
+            border-radius: 20px;
+            margin: 20px 0;
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+
+        .testimonial:hover {
+            transform: translateY(-10px);
+        }
+
+        .testimonial::before {
+            content: '"';
+            font-size: 4em;
+            color: #d89bd6;
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            font-family: "Playfair Display", serif;
+        }
+
+        .testimonial p {
+            color: rgba(255,255,255,0.9);
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .testimonial small {
+            color: rgba(255,255,255,0.7);
+            font-size: 0.95rem;
+            margin-top: 15px;
+            display: block;
+        }
+
+        .how-it-works {
+            padding: 80px 0;
+        }
+
+        .how-it-works h2 {
+            font-family: "Playfair Display", serif;
+            font-size: 2.5em;
+            text-align: center;
+            margin-bottom: 20px;
+            color: #e6b77f;
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-top: 60px;
+        }
+
+        .step {
+            text-align: center;
+            position: relative;
+            background: rgba(255,255,255,0.1);
+            padding: 30px 20px;
+            border-radius: 16px;
+            border: 1px solid rgba(255,255,255,0.03);
+            transition: transform 0.3s ease;
+        }
+
+        .step:hover {
+            transform: translateY(-10px);
+        }
+
+        .step-number {
+            display: inline-block;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, #d89bd6, #9b6edb);
+            border-radius: 50%;
+            line-height: 60px;
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .step h3 {
+            font-family: "Playfair Display", serif;
+            font-size: 1.3em;
+            margin-bottom: 15px;
+            color: #9b6edb;
+        }
+
+        .step p {
+            color: rgba(255,255,255,0.86);
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        .pricing {
+            text-align: center;
+            padding: 80px 0;
+            margin: 80px 0;
+        }
+
+        .pricing h2 {
+            font-family: "Playfair Display", serif;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            color: #e6b77f;
+        }
+
+        .urgency {
+            background: linear-gradient(45deg, rgba(155,110,219,0.3), rgba(216,155,214,0.3));
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px auto;
+            animation: pulse 2s infinite;
+            max-width: 600px;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
+        }
+
+        .countdown {
+            font-size: 1.5em;
+            color: #ffd6e8;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+
+        .price-tag {
+            font-family: "Playfair Display", serif;
+            font-size: 3em;
+            color: #9b6edb;
+            margin: 20px 0;
+            position: relative;
+        }
+
+        .original-price {
+            font-size: 1em;
+            color: #9b6edb;
+            display: inline-block;
+            margin-right: 15px;
+            position: relative;
+        }
+
+        .original-price::after {
+            content: '';
+            position: absolute;
+            left: -5%;
+            top: 57%;
+            width: 110%;
+            height: 3px;
+            background: #ff4757;
+            transform: translateY(-50%) rotate(7deg);
+        }
+
+        @keyframes pricePump {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .current-price {
+            animation: priceFlash 2s ease-in-out infinite;
+        }
+
+        @keyframes priceFlash {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.05); }
+        }
+
+        .guarantee {
+            background: linear-gradient(90deg, rgba(78,205,196,0.2), rgba(68,160,141,0.2));
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            margin: 40px auto;
+            max-width: 600px;
+        }
+
+        .guarantee h3 {
+            font-family: "Playfair Display", serif;
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            color: #e6b77f;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 0;
+            opacity: 0.7;
+            font-size: 0.95rem;
+        }
+
+        footer a {
+            color: #ffd6e8;
+            text-decoration: none;
+        }
+
+        .mobile-sticky {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(90deg, #9b6edb, #d89bd6);
+            padding: 15px;
+            text-align: center;
+            z-index: 1000;
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5em; }
+            .hero p { font-size: 1.2em; }
+            .mobile-sticky { display: block; }
+            .container { padding: 0 15px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="nebula" aria-hidden="true"></div>
+    <div class="stars" id="stars" aria-hidden="true"></div>
+    
+    <header>
+        <div class="container">
+            <div class="logo">♥ StarMate ✨</div>
+            <div class="tagline">Where Love Meets the Cosmos</div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>The Night Our Hearts Aligned</h1>
+            <p>The universe remembers the moment your hearts aligned. Relive that night through a handcrafted sky recreation — capturing the moon, its true phase, and the brightest stars exactly as they appeared when your story began, complete with a personalized cosmic&nbsp;reading.</p>
+            
+            <div class="trust-signals">
+                <div class="trust-signal">
+                    <span>💝</span>
+                    <span>Custom Made</span>
+                </div>
+                <div class="trust-signal">
+                    <span>📧</span>
+                    <span>Digital Delivery</span>
+                </div>
+                <div class="trust-signal">
+                    <span>🔒</span>
+                    <span>Secure Checkout</span>
+                </div>
+            </div>
+
+            <a href="#order" class="cta-button">Create Our Star Map ✨</a>
+        </div>
+    </section>
+
+    <section class="how-it-works">
+        <div class="container">
+            <h2>How It Works</h2>
+            
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Share Your Moment</h3>
+                    <p>Tell us your names, the special date, and location where your love story unfolded. Add a personal message to make it uniquely yours.</p>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>We Map Your Sky</h3>
+                    <p>Our system pulls real astronomical data to recreate the exact night sky — including the brightest stars and moon phase from that magical moment.</p>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Receive & Treasure</h3>
+                    <p>Download your high-resolution star map instantly. Print it, frame it, share it — your cosmic love story, beautifully preserved forever.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="features">
+        <div class="container">
+            <h2>Why Couples Choose StarMate</h2>
+            
+            <div class="features-grid">
+                <div class="feature">
+                    <span class="feature-icon">💫</span>
+                    <h3>Astronomically Accurate</h3>
+                    <p>Each map captures the exact constellation positions, moon phase, and celestial coordinates from your special date and location. Real astronomy, real romance.</p>
+                </div>
+                
+                <div class="feature">
+                    <span class="feature-icon">🎨</span>
+                    <h3>Beautifully Personalized</h3>
+                    <p>Romantic purple-pink cosmic designs featuring your names, the exact time and place your hearts aligned under the stars, and an optional custom message.</p>
+                </div>
+                
+                <div class="feature">
+                    <span class="feature-icon">⚡</span>
+                    <h3>Instant Digital Delivery</h3>
+                    <p>High-resolution file delivered directly to your inbox within minutes. Print at home or professionally frame your cosmic love story.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="social-proof">
+        <div class="container">
+            <h2>Love Stories Written in the Stars</h2>
+            
+            <div class="testimonial">
+                <p>The most meaningful gifts aren't expensive — they're personal. Starmate transforms real astronomical data into art that marks the beginning of a love story. Whether given for an anniversary, Valentine's Day, or any special occasion, each handcrafted sky recreation becomes a celebration of where it all started.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="pricing" id="order">
+        <div class="container">
+            <h2>A Romantic Gift That Lasts Forever</h2>
+            
+            <div class="urgency">
+                <strong>💝 VALENTINE'S SPECIAL</strong><br>
+                <div class="countdown" id="countdown">23:45:12</div>
+                <p>Limited time romantic alignment — create yours before the stars shift!</p>
+            </div>
+            
+            <div class="price-tag" style="display: flex; flex-direction: column; align-items: center; gap: 10px; margin-bottom: 50px;">
+                <div style="font-size: 0.6em; color: #9b6edb;">
+                    Normally <span class="original-price">$9.99</span>
+                </div>
+                <div>
+                    Now, only <strong class="current-price">$6.99</strong>
+                </div>
+            </div>            
+            
+            <p style="font-size: 1.2em; margin: 20px 0;">Your Complete Star Map Includes:</p>
+            <ul style="text-align: center; max-width: 450px; margin: 0 auto; line-height: 2; list-style: none; padding: 0;">
+                <li>✨ Astronomically Accurate Star Map</li>
+                <li>💕 Both Names & Custom Message</li>
+                <li>🌙 Exact Moon Phase from Your Date</li>
+                <li>📍 Precise Location Coordinates</li>
+                <li>🖼️ High-Resolution Print-Ready File</li>
+                <li>📧 Instant Email Delivery</li>
+            </ul>
+            
+            <!-- <div class="guarantee">
+                <h3>💝 Our Love Guarantee</h3>
+                <p>We ensure astronomical accuracy and romantic perfection. If anything doesn't look right, we'll revise it for free — because your love story deserves to be captured perfectly.</p>
+            </div> -->
+            
+            <div style="margin-top: 50px;">
+                <a href="star_form.html" class="cta-button">Capture Our Moment — $6.99 ⭐</a>
+            </div>
+            
+            <p style="margin-top: 20px; font-size: 0.9em; opacity: 0.8;">
+                🔒 Secure Stripe Checkout • ⚡ Instant Delivery • 💝 Perfect for Any Occasion
+            </p>
+        </div>
+    </section>
+
+    <div class="mobile-sticky">
+        <a href="#order" class="cta-button" style="display: block; margin: 0; padding: 15px; font-size: 1em;">
+            Create Our Star Map — $6.99 ⭐
+        </a>        
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 StarMate. Crafted with love — and a little astronomy.</p>
+            <p style="margin-top: 8px;">
+                Contact: <a href="mailto:hello@starmate.co">hello@starmate.co</a> |
+                <a href="privacy.html" style="color: #e6b77f;">Privacy Policy</a> |
+                <a href="terms.html" style="color: #e6b77f;">Terms of Service</a>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Create animated stars
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            const numStars = 300;
+            
+            for (let i = 0; i < numStars; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animationDelay = Math.random() * 2 + 's';
+                starsContainer.appendChild(star);
+            }
+        }
+
+        // Countdown timer
+        function updateCountdown() {
+            const countdownElement = document.getElementById('countdown');
+            const now = new Date().getTime();
+            const endTime = now + (24 * 60 * 60 * 1000);
+            
+            setInterval(() => {
+                const currentTime = new Date().getTime();
+                const timeLeft = endTime - currentTime;
+                
+                const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+                
+                countdownElement.innerHTML = 
+                    String(hours).padStart(2, '0') + ':' +
+                    String(minutes).padStart(2, '0') + ':' +
+                    String(seconds).padStart(2, '0');
+            }, 1000);
+        }
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const targetPosition = target.getBoundingClientRect().top + window.pageYOffset;
+                    const offsetPosition = targetPosition - 50; // Adjusted to -50
+                    
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Parallax effect for nebula and individual stars
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const nebula = document.querySelector('.nebula');
+            const stars = document.querySelectorAll('.star');
+            
+            nebula.style.transform = `translateY(${scrolled * 0.5}px)`;
+            
+            // Move each star individually for parallax but keep container fixed
+            stars.forEach((star, index) => {
+                const speed = 0.1 + (index % 3) * 0.05;
+                star.style.transform = `translateY(${scrolled * speed}px)`;
+            });
+        });
+
+        // Initialize
+        createStars();
+        updateCountdown();
+    </script>
+</body>
+</html>

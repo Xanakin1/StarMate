@@ -1,0 +1,151 @@
+{
+  "name": "starpaws-backend",
+  "version": "1.0.0",
+  "description": "Custom Pet Constellation Maps Backend API",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "stripe": "^14.15.0",
+    "nodemailer": "^6.9.8",
+    "canvas": "^2.11.2",
+    "astronomy-engine": "^2.1.19",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  },
+  "keywords": ["pet", "constellation", "astronomy", "dropshipping"],
+  "author": "StarPaws",
+  "license": "MIT"
+}
+
+// SETUP INSTRUCTIONS:
+// ====================
+
+// 1. Initialize Node.js project:
+// mkdir starpaws-backend
+// cd starpaws-backend
+// npm init -y
+// npm install express stripe nodemailer canvas astronomy-engine cors dotenv
+// npm install -D nodemon
+
+// 2. Create .env file with these variables:
+/*
+STRIPE_SECRET_KEY=sk_test_51234567890... (Get from Stripe Dashboard)
+STRIPE_PUBLISHABLE_KEY=pk_test_51234567890... (For frontend)
+OPENCAGE_API_KEY=your_key_here (Free at opencagedata.com - 2500 requests/day)
+EMAIL_USER=your-gmail@gmail.com
+EMAIL_PASS=your-gmail-app-password (Enable 2FA, generate app password)
+PORT=3001
+FRONTEND_URL=http://localhost:3000
+*/
+
+// 3. API Keys needed:
+// - Stripe: stripe.com (free test account)
+// - OpenCage Geocoding: opencagedata.com (free tier: 2500 requests/day)
+// - Gmail App Password: Enable 2FA, generate app password
+
+// 4. Frontend Integration Code:
+// Add this to your HTML file's script section:
+
+const STRIPE_PUBLISHABLE_KEY = 'pk_test_your_key_here';
+const API_BASE_URL = 'http://localhost:3001/api';
+
+async function processOrder() {
+    const petName = prompt('Pet Name:');
+    const adoptionDate = prompt('Adoption Date (YYYY-MM-DD):');
+    const location = prompt('Location (City, State/Country):');
+    const email = prompt('Your Email:');
+    const customMessage = prompt('Custom Message (optional):');
+    
+    if (!petName || !adoptionDate || !location || !email) {
+        alert('Please fill in all required fields');
+        return;
+    }
+    
+    try {
+        // Create payment intent
+        const response = await fetch(`${API_BASE_URL}/create-payment-intent`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                petName,
+                adoptionDate,
+                location,
+                email,
+                customMessage
+            })
+        });
+        
+        const { clientSecret } = await response.json();
+        
+        // Initialize Stripe
+        const stripe = Stripe(STRIPE_PUBLISHABLE_KEY);
+        
+        // Process payment
+        const { error, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
+            payment_method: {
+                card: {
+                    // In real implementation, use Stripe Elements
+                    number: '4242424242424242',
+                    exp_month: 12,
+                    exp_year: 2025,
+                    cvc: '123'
+                }
+            }
+        });
+        
+        if (error) {
+            alert('Payment failed: ' + error.message);
+        } else if (paymentIntent.status === 'succeeded') {
+            // Notify backend of successful payment
+            await fetch(`${API_BASE_URL}/payment-success`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    paymentIntentId: paymentIntent.id
+                })
+            });
+            
+            alert('🎉 Success! Check your email for your custom star map!');
+        }
+    } catch (error) {
+        alert('Error: ' + error.message);
+    }
+}
+
+// 5. Deployment Options:
+// - Heroku: git push heroku main
+// - Railway: railway up
+// - DigitalOcean App Platform
+// - AWS Elastic Beanstalk
+
+// 6. Production Considerations:
+// - Add rate limiting
+// - Implement proper error handling
+// - Add request validation
+// - Set up monitoring
+// - Use environment-specific configs
+// - Add HTTPS
+// - Database for order tracking
+// - Queue system for image generation
+
+// 7. Cost Breakdown (Monthly):
+// - Stripe: 2.9% + 30¢ per transaction
+// - OpenCage API: Free (2500 requests) or $50/month (100k)
+// - Server hosting: $5-25/month
+// - Email service: Free (Gmail) or $10/month (SendGrid)
+// - Domain: $10-15/year
+
+// 8. Revenue Potential:
+// - Product price: $4.99
+// - Costs per order: ~$0.45 (Stripe fees + server)
+// - Profit per order: ~$4.54
+// - Break-even: ~50 orders/month
+// - At 1000 orders/month: ~$4,540 profit
+// - At 10,000 orders/month: ~$45,400 profit

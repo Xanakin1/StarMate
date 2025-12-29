@@ -316,6 +316,7 @@
         email: form.email.value
       };
 
+      // Submit to your backend endpoint
       const response = await fetch('/create-checkout-session', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -326,7 +327,7 @@
       if (session.url) {
         window.location.href = session.url;
       } else {
-        alert('Payment could not be initialized.');
+        alert('Payment could not be initialized. Please try again.');
       }
     });
   </script>

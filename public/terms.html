@@ -3,58 +3,219 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Starmate Terms of Service</title>
+  <title>Terms of Service | StarMate</title>
+  
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+  
   <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     body {
-      font-family: Georgia, serif;
-      background-color: #1a0028;
-      color: #f2d9ff;
-      padding: 40px;
+      font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: radial-gradient(1200px 600px at 10% 10%, rgba(155,110,219,0.12), transparent),
+                  linear-gradient(135deg, #0b0520 0%, #241134 100%);
+      color: white;
+      -webkit-font-smoothing: antialiased;
       line-height: 1.7;
+      min-height: 100vh;
     }
-    h1, h2 {
-      color: #ff9ad7;
+
+    .nebula {
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(ellipse at 30% 20%, rgba(155,110,219,0.15), transparent 50%),
+                  radial-gradient(ellipse at 70% 80%, rgba(216,155,214,0.1), transparent 50%);
+      opacity: 0.4;
+      filter: blur(80px);
+      pointer-events: none;
+      z-index: 0;
     }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 40px 20px;
+      position: relative;
+      z-index: 1;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .logo {
+      font-family: "Playfair Display", serif;
+      font-size: 2em;
+      letter-spacing: 0.6px;
+      font-weight: 700;
+      background: linear-gradient(90deg, #d89bd6, #9b6edb);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 10px;
+    }
+
+    .back-link {
+      display: inline-block;
+      color: #d89bd6;
+      text-decoration: none;
+      margin-bottom: 20px;
+      transition: color 0.2s;
+    }
+
+    .back-link:hover {
+      color: #9b6edb;
+    }
+
+    .content-box {
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.04));
+      border-radius: 24px;
+      padding: 40px;
+      box-shadow: 0 20px 60px rgba(9,6,30,0.6);
+      border: 1px solid rgba(255,255,255,0.08);
+      backdrop-filter: blur(10px);
+    }
+
+    h1 {
+      font-family: "Playfair Display", serif;
+      font-size: 2.5em;
+      background: linear-gradient(90deg, #d89bd6, #9b6edb);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 10px;
+    }
+
+    h2 {
+      font-family: "Playfair Display", serif;
+      color: #e6b77f;
+      font-size: 1.5em;
+      margin-top: 30px;
+      margin-bottom: 15px;
+    }
+
+    p {
+      color: rgba(255,255,255,0.85);
+      margin-bottom: 15px;
+    }
+
+    strong {
+      color: #d89bd6;
+    }
+
+    ul {
+      margin: 15px 0;
+      padding-left: 30px;
+    }
+
+    ul li {
+      color: rgba(255,255,255,0.85);
+      margin-bottom: 8px;
+    }
+
     a {
-      color: #ffb3ec;
+      color: #d89bd6;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    a:hover {
+      color: #9b6edb;
+    }
+
+    footer {
+      text-align: center;
+      padding: 40px 0;
+      color: rgba(255,255,255,0.6);
+      font-size: 0.9rem;
+    }
+
+    footer a {
+      color: #ffd6e8;
       text-decoration: none;
     }
-    a:hover {
-      text-decoration: underline;
+
+    footer a:hover {
+      color: #e6b77f;
+    }
+
+    @media (max-width: 768px) {
+      .content-box {
+        padding: 28px 20px;
+      }
+      
+      h1 {
+        font-size: 2em;
+      }
     }
   </style>
 </head>
 <body>
-  <h1>Starmate Terms of Service</h1>
-  <p><strong>Effective Date:</strong> January 2026</p>
+  <div class="nebula"></div>
+  
+  <div class="container">
+    <a href="index.html" class="back-link">← Back to Home</a>
+    
+    <header>
+      <div class="logo">♥ StarMate ✨</div>
+    </header>
 
-  <p>Welcome to Starmate! By accessing our website and purchasing one of our personalized star maps, you agree to the following terms and conditions.</p>
+    <div class="content-box">
+      <h1>Terms of Service</h1>
+      <p><strong>Effective Date:</strong> January 2025</p>
 
-  <h2>1. Description of Service</h2>
-  <p>Starmate creates customized digital star maps based on a meaningful date and location you provide — such as an anniversary, first date, engagement night, or any romantic moment.</p>
+      <p>Welcome to StarMate! By accessing our website and purchasing one of our personalized star maps, you agree to the following terms and conditions.</p>
 
-  <h2>2. Payment and Delivery</h2>
-  <p>All payments are securely processed through Stripe. After your purchase is completed, your personalized star map will be generated and delivered to the email address you provided, typically within a few minutes.</p>
+      <h2>1. Description of Service</h2>
+      <p>StarMate creates customized digital star maps based on a meaningful date and location you provide — such as an anniversary, first date, engagement night, wedding day, or any romantic moment that matters to you.</p>
 
-  <h2>3. Digital Product Policy</h2>
-  <p>Because each map is custom-created for a specific couple, <strong>all sales are final</strong>. If there is an issue with your file (missing text, incorrect details, formatting errors, etc.), please contact us and we will gladly correct it.</p>
+      <h2>2. Payment and Delivery</h2>
+      <p>All payments are securely processed through Stripe. After your purchase is completed, your personalized star map will be generated and delivered to the email address you provided, typically within a few minutes.</p>
 
-  <h2>4. Intellectual Property</h2>
-  <p>All content on the Starmate website — including star maps, graphics, text, and layout — is the property of Starmate. You may not copy, distribute, or resell any part of our designs without written permission.</p>
+      <h2>3. Digital Product Policy</h2>
+      <p>Because each map is custom-created for a specific couple and their unique moment, <strong>all sales are final</strong>. If there is an issue with your file (incorrect details, missing information, formatting errors, etc.), please contact us at <a href="mailto:hello@starmate.co">hello@starmate.co</a> and we will gladly correct it at no additional charge.</p>
 
-  <h2>5. User Responsibilities</h2>
-  <p>You agree to provide accurate information for generating your star map. You also agree not to misuse the Starmate website for unlawful or harmful purposes.</p>
+      <h2>4. Intellectual Property</h2>
+      <p>All content on the StarMate website — including star maps, graphics, text, branding, and layout — is the property of StarMate. You may not copy, distribute, or resell any part of our designs without written permission.</p>
 
-  <h2>6. Disclaimer</h2>
-  <p>We aim to provide accurate astronomical representations using publicly available celestial data, but we do not guarantee absolute astronomical precision.</p>
+      <h2>5. User Responsibilities</h2>
+      <p>You agree to provide accurate information for generating your star map (names, date, location, custom message). We are not responsible for inaccuracies caused by incorrect information submitted during checkout. You also agree not to misuse the StarMate website for unlawful or harmful purposes.</p>
 
-  <h2>7. Limitation of Liability</h2>
-  <p>Starmate is not responsible for indirect, incidental, or consequential damages resulting from the use of our website or digital products.</p>
+      <h2>6. Astronomy & Accuracy Disclaimer</h2>
+      <p>We use publicly available astronomical data to generate star positions and moon phases. While this data is highly reliable and we strive for accuracy, we cannot guarantee perfect scientific precision in every case.</p>
 
-  <h2>8. Governing Law</h2>
-  <p>These Terms are governed by the laws of the State of Arizona, USA.</p>
+      <h2>7. Limitation of Liability</h2>
+      <p>StarMate is not liable for indirect, incidental, or consequential damages arising from the use of our website or digital products.</p>
 
-  <h2>9. Contact</h2>
-  <p>If you have questions or need support, contact us at <a href="mailto:hello@starmategifts.com">hello@starmategifts.com</a>.</p>
+      <h2>8. Refunds and Revisions</h2>
+      <p>Due to the custom nature of each star map, we do not offer refunds. However, if there is an error in your order (wrong date, incorrect names, missing elements), we will revise it for free. Please contact us within 30 days of purchase.</p>
+
+      <h2>9. Governing Law</h2>
+      <p>These Terms are governed by the laws of the State of Arizona, USA, unless otherwise required by your local jurisdiction.</p>
+
+      <h2>10. Changes to Terms</h2>
+      <p>We may update these Terms of Service occasionally. Any changes will be posted on this page with an updated effective date.</p>
+
+      <h2>11. Contact</h2>
+      <p>Questions or concerns? Contact us at <a href="mailto:hello@starmate.co">hello@starmate.co</a>.</p>
+    </div>
+  </div>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 StarMate. Crafted with love — and a little astronomy.</p>
+      <p style="margin-top: 8px;">
+        <a href="mailto:hello@starmate.co">hello@starmate.co</a> | 
+        <a href="index.html">Home</a> | 
+        <a href="privacy.html" style="color: #e6b77f;">Privacy Policy</a>
+      </p>
+    </div>
+  </footer>
 </body>
 </html>

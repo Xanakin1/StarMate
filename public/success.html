@@ -1,108 +1,277 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Thank You | StarPaws</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thank You! | StarMate</title>
+  
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+  
   <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
       padding: 0;
-      background: #0A0A21; /* Closer to your image's background color */
+      font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: radial-gradient(1200px 600px at 10% 10%, rgba(155,110,219,0.12), transparent),
+                  linear-gradient(135deg, #0b0520 0%, #241134 100%);
       min-height: 100vh;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
+      color: white;
+      -webkit-font-smoothing: antialiased;
     }
 
-    body::before {
-      content: '';
-      position: absolute;
-      top: 0;
+    /* Animated stars background */
+    .stars {
+      position: fixed;
+      top: -50%;
       left: 0;
       width: 100%;
-      height: 100%;
-      background: 
-        radial-gradient(circle at 10% 20%, white 1px, transparent 1px),
-        radial-gradient(circle at 80% 80%, white 1px, transparent 1px),
-        radial-gradient(circle at 40% 40%, white 1px, transparent 1px),
-        radial-gradient(circle at 60% 10%, white 1px, transparent 1px),
-        radial-gradient(circle at 90% 50%, white 1px, transparent 1px),
-        radial-gradient(circle at 20% 90%, white 1px, transparent 1px),
-        radial-gradient(circle at 70% 30%, white 1px, transparent 1px),
-        radial-gradient(circle at 30% 70%, white 1px, transparent 1px);
-      background-size: 200px 200px;
-      animation: twinkle 3s linear infinite;
-      z-index: -1;
-    }
-
-    /* Optional: Add a subtle twinkle animation */
-    @keyframes twinkle {
-      0%, 100% { opacity: 0.8; }
-      50% { opacity: 1; }
-    }
-
-    .image-container {
-      position: relative;
-      width: 90%;
-      max-width: 900px;
-      border-radius: 20px;
-      overflow: hidden;
-      /* Subtle gradient border effect */
-      background: linear-gradient(135deg, 
-        rgba(255, 255, 255, 0.1) 0%, 
-        rgba(255, 255, 255, 0.05) 25%, 
-        transparent 50%, 
-        rgba(255, 255, 255, 0.05) 75%, 
-        rgba(255, 255, 255, 0.1) 100%);
-      padding: 2px;
-    }
-
-    .image-container::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: linear-gradient(135deg, 
-        rgba(255, 255, 255, 0.08) 0%, 
-        transparent 30%, 
-        transparent 70%, 
-        rgba(255, 255, 255, 0.08) 100%);
-      border-radius: 20px;
+      height: 300%;
       pointer-events: none;
       z-index: 1;
     }
 
-    .illustration {
-      width: 100%;
-      height: auto;
-      border-radius: 18px;
-      display: block;
-      position: relative;
+    .star {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: linear-gradient(180deg, #fff, #ffd6e8);
+      border-radius: 50%;
+      animation: twinkle 2s infinite alternate;
+    }
+
+    @keyframes twinkle {
+      0% { opacity: 0.25; }
+      50% { opacity: 1; }
+      100% { opacity: 0.4; }
+    }
+
+    .nebula {
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(ellipse at 30% 20%, rgba(155,110,219,0.15), transparent 50%),
+                  radial-gradient(ellipse at 70% 80%, rgba(216,155,214,0.1), transparent 50%);
+      opacity: 0.4;
+      filter: blur(80px);
+      pointer-events: none;
       z-index: 0;
+    }
+
+    .content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: 40px 20px;
+      max-width: 800px;
+    }
+
+    .logo {
+      font-family: "Playfair Display", serif;
+      font-size: 2.5em;
+      letter-spacing: 0.6px;
+      font-weight: 700;
+      background: linear-gradient(90deg, #d89bd6, #9b6edb);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 30px;
+    }
+
+    .success-box {
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.04));
+      border-radius: 24px;
+      padding: 50px 40px;
+      box-shadow: 0 20px 60px rgba(9,6,30,0.6);
+      border: 1px solid rgba(255,255,255,0.08);
+      backdrop-filter: blur(10px);
+      margin-bottom: 30px;
+    }
+
+    h1 {
+      font-family: "Playfair Display", serif;
+      font-size: 3em;
+      background: linear-gradient(90deg, #d89bd6, #9b6edb);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 20px;
+    }
+
+    .emoji {
+      font-size: 4em;
+      margin-bottom: 20px;
+      display: block;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+
+    p {
+      color: rgba(255,255,255,0.85);
+      font-size: 1.2em;
+      line-height: 1.7;
+      margin-bottom: 15px;
+    }
+
+    .highlight {
+      color: #d89bd6;
+      font-weight: 600;
+    }
+
+    .info-box {
+      background: rgba(155,110,219,0.15);
+      border-radius: 16px;
+      padding: 25px;
+      margin: 30px 0;
+      border: 1px solid rgba(216,155,214,0.2);
+    }
+
+    .info-box h3 {
+      font-family: "Playfair Display", serif;
+      color: #e6b77f;
+      margin-bottom: 12px;
+      font-size: 1.3em;
+    }
+
+    .info-box p {
+      font-size: 1em;
+      margin-bottom: 8px;
+    }
+
+    .cta-button {
+      display: inline-block;
+      padding: 18px 40px;
+      background: linear-gradient(90deg, #9b6edb, #d89bd6);
+      color: white;
+      text-decoration: none;
+      font-size: 1.1em;
+      font-weight: bold;
+      border-radius: 50px;
+      transition: all 0.3s ease;
+      box-shadow: 0 10px 30px rgba(155,110,219,0.3);
+      margin-top: 20px;
+    }
+
+    .cta-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 40px rgba(155,110,219,0.4);
+    }
+
+    footer {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: 30px 0;
+      color: rgba(255,255,255,0.6);
+      font-size: 0.9rem;
+    }
+
+    footer a {
+      color: #ffd6e8;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      color: #e6b77f;
+    }
+
+    @media (max-width: 768px) {
+      h1 { font-size: 2.2em; }
+      .logo { font-size: 2em; }
+      .success-box { padding: 35px 25px; }
+      p { font-size: 1.05em; }
     }
   </style>
 </head>
 <body>
-  <div class="image-container">
-    <img src="/success_image.png" alt="Thank you for your purchase" class="illustration" />
-  </div>
+  <div class="nebula"></div>
+  <div class="stars" id="stars"></div>
   
+  <div class="content">
+    <div class="logo">♥ StarMate ✨</div>
+    
+    <div class="success-box">
+      <span class="emoji">💝✨</span>
+      <h1>Thank You!</h1>
+      
+      <p>Your cosmic love story is being created! 🌟</p>
+      
+      <div class="info-box">
+        <h3>What happens next?</h3>
+        <p>📧 Your personalized star map will be delivered to your email within the next few minutes.</p>
+        <p>🖼️ The file is high-resolution and ready to print or frame.</p>
+        <p>💜 Check your spam folder if you don't see it in your inbox.</p>
+      </div>
+      
+      <p>We're creating an astronomically accurate map of <span class="highlight">the exact night sky</span> from your special moment — complete with the moon phase, brightest stars, and your personalized details.</p>
+      
+      <p style="margin-top: 25px; font-size: 0.95em; color: rgba(255,255,255,0.7);">
+        Questions or issues? Contact us at <a href="mailto:hello@starmate.co" style="color: #d89bd6;">hello@starmate.co</a>
+      </p>
+    </div>
+    
+    <a href="index.html" class="cta-button">← Back to Home</a>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 StarMate. Crafted with love — and a little astronomy.</p>
+    <p style="margin-top: 8px;">
+      <a href="mailto:hello@starmate.co">hello@starmate.co</a> | 
+      <a href="privacy.html" style="color: #e6b77f;">Privacy</a> | 
+      <a href="terms.html" style="color: #e6b77f;">Terms</a>
+    </p>
+  </footer>
+
   <script>
+    // Create animated stars
+    function createStars() {
+      const starsContainer = document.getElementById('stars');
+      const numStars = 150;
+      
+      for (let i = 0; i < numStars; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        star.style.left = Math.random() * 100 + '%';
+        star.style.top = Math.random() * 100 + '%';
+        star.style.animationDelay = Math.random() * 2 + 's';
+        starsContainer.appendChild(star);
+      }
+    }
+
+    // Get session ID from URL and trigger star map generation
     const urlParams = new URLSearchParams(window.location.search);
     const sessionId = urlParams.get('session_id');
   
     if (sessionId) {
-      fetch('/api/dev-generate', {
+      // Send request to backend to generate and email the star map
+      fetch('/api/generate-starmap', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ sessionId })
       })
       .then(res => res.json())
-      .then(data => console.log('✅ Star map sent:', data))
-      .catch(err => console.error('❌ Error sending star map:', err));
+      .then(data => {
+        console.log('✅ Star map generation initiated:', data);
+      })
+      .catch(err => {
+        console.error('❌ Error initiating star map generation:', err);
+      });
     }
+
+    createStars();
   </script>
 </body>
 </html>

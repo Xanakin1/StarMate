@@ -21,7 +21,6 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    /* Twinkling Starfield */
     .starfield {
       position: fixed;
       top: 0;
@@ -43,7 +42,6 @@
       z-index: 0;
     }
 
-    /* Glass Card */
     .container {
       position: relative;
       z-index: 2;
@@ -57,7 +55,6 @@
       backdrop-filter: blur(10px);
     }
 
-    /* Header */
     h1 {
       text-align: center;
       font-family: "Playfair Display", serif;
@@ -85,7 +82,7 @@
       font-weight: 500;
     }
 
-    input {
+    input, textarea {
       width: 100%;
       padding: 14px;
       margin-top: 8px;
@@ -99,11 +96,16 @@
       box-sizing: border-box;
     }
 
-    input::placeholder {
+    textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    input::placeholder, textarea::placeholder {
       color: rgba(255,255,255,0.4);
     }
 
-    input:focus {
+    input:focus, textarea:focus {
       outline: none;
       border-color: #9b6edb;
       background: rgba(255,255,255,0.08);
@@ -113,6 +115,12 @@
     input[type="date"]::-webkit-calendar-picker-indicator {
       filter: invert(1);
       cursor: pointer;
+    }
+
+    .helper-text {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.6);
+      margin-top: 6px;
     }
 
     button {
@@ -131,13 +139,18 @@
       transition: all 0.3s ease;
     }
 
-    button:hover {
+    button:hover:not(:disabled) {
       transform: translateY(-3px);
       box-shadow: 0 15px 40px rgba(155,110,219,0.4);
     }
 
-    button:active {
+    button:active:not(:disabled) {
       transform: translateY(-1px);
+    }
+
+    button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
     }
 
     .trust-badges {
@@ -156,7 +169,6 @@
       gap: 6px;
     }
 
-    /* Star Animation */
     .star {
       animation: twinkle 2s infinite ease-in-out;
     }
@@ -199,6 +211,16 @@
     footer a:hover {
       color: #9b6edb;
     }
+
+    .error-message {
+      background: rgba(255,77,77,0.2);
+      border: 1px solid rgba(255,77,77,0.4);
+      color: #ffcccc;
+      padding: 12px;
+      border-radius: 8px;
+      margin-top: 15px;
+      display: none;
+    }
   </style>
 </head>
 
@@ -222,32 +244,6 @@
     <circle class="star" cx="35%" cy="75%" r="1.3" fill="#ffd6e8" opacity="0.7" />
     <circle class="star" cx="55%" cy="35%" r="0.8" fill="white" opacity="0.6" />
     <circle class="star" cx="75%" cy="45%" r="1" fill="#9b6edb" opacity="0.8" />
-    <circle class="star" cx="5%" cy="65%" r="0.9" fill="white" opacity="0.5" />
-    <circle class="star" cx="95%" cy="85%" r="1.2" fill="#ffd6e8" opacity="0.9" />
-    <circle class="star" cx="40%" cy="90%" r="0.7" fill="white" opacity="0.6" />
-    <circle class="star" cx="60%" cy="8%" r="1.1" fill="#d89bd6" opacity="0.7" />
-    
-    <!-- Additional twinkling stars -->
-    <circle class="star" cx="12%" cy="32%" r="0.9" fill="white" opacity="0.7" />
-    <circle class="star" cx="88%" cy="18%" r="1.1" fill="#ffd6e8" opacity="0.8" />
-    <circle class="star" cx="42%" cy="62%" r="0.8" fill="#ffd6e8" opacity="0.6" />
-    <circle class="star" cx="68%" cy="78%" r="1.2" fill="white" opacity="0.9" />
-    <circle class="star" cx="33%" cy="42%" r="0.7" fill="#d89bd6" opacity="0.5" />
-    <circle class="star" cx="77%" cy="12%" r="1" fill="#ffd6e8" opacity="0.8" />
-    <circle class="star" cx="8%" cy="88%" r="0.9" fill="white" opacity="0.6" />
-    <circle class="star" cx="52%" cy="22%" r="1.1" fill="#ffd6e8" opacity="0.7" />
-    <circle class="star" cx="92%" cy="52%" r="0.8" fill="#d89bd6" opacity="0.9" />
-    <circle class="star" cx="18%" cy="72%" r="1" fill="white" opacity="0.5" />
-    <circle class="star" cx="62%" cy="28%" r="0.9" fill="#9b6edb" opacity="0.8" />
-    <circle class="star" cx="38%" cy="8%" r="1.2" fill="#ffd6e8" opacity="0.7" />
-    <circle class="star" cx="82%" cy="92%" r="0.7" fill="white" opacity="0.6" />
-    <circle class="star" cx="28%" cy="58%" r="1" fill="#d89bd6" opacity="0.8" />
-    <circle class="star" cx="72%" cy="38%" r="0.8" fill="#ffd6e8" opacity="0.9" />
-    <circle class="star" cx="48%" cy="82%" r="1.1" fill="white" opacity="0.7" />
-    <circle class="star" cx="14%" cy="14%" r="0.9" fill="#ffd6e8" opacity="0.6" />
-    <circle class="star" cx="86%" cy="68%" r="1" fill="#9b6edb" opacity="0.8" />
-    <circle class="star" cx="34%" cy="28%" r="0.8" fill="white" opacity="0.5" />
-    <circle class="star" cx="66%" cy="88%" r="1.2" fill="#d89bd6" opacity="0.9" />
   </svg>
 
   <div class="container">
@@ -255,25 +251,31 @@
     <p class="subtitle">Capture the night your hearts aligned</p>
 
     <form id="starForm">
-      <label for="yourName">Your Name:</label>
+      <label for="yourName">Your Name: *</label>
       <input type="text" name="yourName" id="yourName" placeholder="e.g., Sarah" required>
 
-      <label for="partnerName">Partner's Name:</label>
+      <label for="partnerName">Partner's Name: *</label>
       <input type="text" name="partnerName" id="partnerName" placeholder="e.g., James" required>
 
-      <label for="specialDate">Special Date:</label>
+      <label for="specialDate">Special Date: *</label>
       <input type="date" name="specialDate" id="specialDate" required>
+      <p class="helper-text">The date when your hearts aligned (first date, engagement, wedding, etc.)</p>
 
-      <label for="location">Meaningful Location:</label>
-      <input type="text" name="location" id="location" placeholder="e.g., Paris, France" required>
+      <label for="location">Location: *</label>
+      <input type="text" name="location" id="location" placeholder="e.g., Paris, France or New York, NY" required>
+      <p class="helper-text">Where did this moment happen?</p>
 
       <label for="customMessage">Custom Message (Optional):</label>
-      <input type="text" name="customMessage" id="customMessage" placeholder="e.g., Where our story began (max 50 characters)" maxlength="50">
+      <textarea name="customMessage" id="customMessage" placeholder="e.g., Where our story began... (max 100 characters)" maxlength="100"></textarea>
+      <p class="helper-text">This will appear on your star map</p>
 
-      <label for="email">Your Email:</label>
+      <label for="email">Your Email: *</label>
       <input type="email" name="email" id="email" placeholder="your@email.com" required>
+      <p class="helper-text">We'll send your star map here instantly</p>
 
-      <button type="submit">Create Your Star Map ⭐</button>
+      <div class="error-message" id="errorMessage"></div>
+
+      <button type="submit" id="submitBtn">Create Your Star Map ⭐</button>
 
       <div class="trust-badges">
         <div class="trust-badge">
@@ -303,31 +305,52 @@
 
   <script>
     const form = document.getElementById('starForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const errorMessage = document.getElementById('errorMessage');
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
+      
+      // Disable button and show loading
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Processing...';
+      errorMessage.style.display = 'none';
 
       const formData = {
-        yourName: form.yourName.value,
-        partnerName: form.partnerName.value,
+        yourName: form.yourName.value.trim(),
+        partnerName: form.partnerName.value.trim(),
         specialDate: form.specialDate.value,
-        location: form.location.value,
-        customMessage: form.customMessage.value,
-        email: form.email.value
+        location: form.location.value.trim(),
+        customMessage: form.customMessage.value.trim(),
+        email: form.email.value.trim()
       };
 
-      // Submit to your backend endpoint
-      const response = await fetch('/create-checkout-session', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
-      });
+      try {
+        // Submit to your backend endpoint
+        const response = await fetch('/create-checkout-session', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(formData)
+        });
 
-      const session = await response.json();
-      if (session.url) {
-        window.location.href = session.url;
-      } else {
-        alert('Payment could not be initialized. Please try again.');
+        if (!response.ok) {
+          throw new Error('Failed to create checkout session');
+        }
+
+        const session = await response.json();
+        
+        if (session.url) {
+          // Redirect to Stripe checkout
+          window.location.href = session.url;
+        } else {
+          throw new Error('No checkout URL received');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        errorMessage.textContent = 'Payment could not be initialized. Please try again or contact support.';
+        errorMessage.style.display = 'block';
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Create Your Star Map ⭐';
       }
     });
   </script>
